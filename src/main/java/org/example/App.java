@@ -66,7 +66,7 @@ public class App {
       Container.memberController.whoami();
     } else if (cmd.equals("이동")) {
       Container.moveController.move();
-    } else if (cmd.equals("system exit")) {
+    } else if (cmd.equals("종료")) {
       System.out.println("시스템 종료");
       System.exit(0);
     } else {
