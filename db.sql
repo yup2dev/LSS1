@@ -30,3 +30,61 @@ CREATE TABLE `member` (
 
 SELECT * FROM article;
 SELECT * FROM `member`;
+
+------------------
+잔다
+# DB 생성
+DROP DATABASE IF EXISTS LSS;
+CREATE DATABASE LSS;
+
+# DB 선택
+USE LSS;
+
+# 게시물 테이블 생성
+CREATE TABLE article (
+	id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	title CHAR(100) NOT NULL,
+	memberId INT NOT NULL,
+	`body` TEXT NOT NULL,
+	hit INT(10) UNSIGNED NOT NULL
+);
+
+# 회원 테이블 생성
+CREATE TABLE `member` (
+	id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	loginId CHAR(20) NOT NULL,
+	loginPw CHAR(100) NOT NULL,
+	`name` CHAR(200) NOT NULL,
+	nickname CHAR(20) NOT NULL,
+	birth CHAR(20) NOT NULL
+);
+
+CREATE TABLE `articlecomment`(
+id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+regDate DATETIME NOT NULL,
+updateDate DATETIME NOT NULL,
+memberId INT NOT NULL,
+`body` VARCHAR(100),
+articleId INT NOT NULL
+);
+
+INSERT INTO articlecomment
+SET regDate = NOW(),
+updateDate = NOW(),
+memberID INT NOT NULL,
+BODY
+
+SELECT A.id, A.title, M.nickname AS extra__writerName
+FROM article AS A
+INNER JOIN MEMBER AS M
+ON A.memberId = M.id
+
+SELECT A.id, A.title
+FROM article AS A
+
+SELECT * FROM article;
+SELECT * FROM `member`;
