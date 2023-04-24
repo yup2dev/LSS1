@@ -11,6 +11,7 @@ CREATE TABLE article (
 	regDate DATETIME NOT NULL,
 	updateDate DATETIME NOT NULL,
 	title CHAR(100) NOT NULL,
+	memberId INT NOT NULL,
 	`body` TEXT NOT NULL,
 	hit INT(10) UNSIGNED NOT NULL
 );
@@ -29,7 +30,6 @@ CREATE TABLE `member` (
 
 SELECT * FROM article;
 SELECT * FROM `member`;
-
 ------------------------------
 #여기까지 유효데이터
 

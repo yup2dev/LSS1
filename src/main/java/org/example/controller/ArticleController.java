@@ -119,6 +119,7 @@ public class ArticleController {
     articleService.update(id, title, body);
 
     System.out.printf("%d번 게시물이 수정되었습니다.\n", id);
+    System.out.println("-".repeat(30));
   }
 
   public void delete() {
@@ -157,6 +158,7 @@ public class ArticleController {
 
   public void run() {
     while (true) {
+      System.out.println("-".repeat(30));
       System.out.println("게시판 보기 / 상세보기 / 글쓰기 / 돌아가기");
       System.out.printf("게시판 명령어: ");
       String command =Container.scanner.nextLine();
