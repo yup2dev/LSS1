@@ -33,4 +33,5 @@ public class Article {
             this.extra__writerName = (String)articleMap.get("extra__writerName");
         }
     }
+
 }
