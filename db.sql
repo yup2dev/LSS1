@@ -49,23 +49,6 @@ TIME TIME NOT NULL,
 );
 
 
-INSERT INTO articlecomment
-SET articleId = 1,
-regDate = NOW(),
-updateDate = NOW(),
-`comment` = '댓글1',
-memberId = 1;
-
-SELECT articlecomment.comment, articlecomment.articleId, article.id FROM articlecomment
-INNER JOIN article
-ON articlecomment.articleId = article.id
-WHERE article.id = 1
-
-SELECT * FROM article;
-SELECT * FROM `member`;
-SELECT * FROM articlecomment;
-SELECT articlecomment.articleid, articlecomment.comment FROM articlecomment;
-
 INSERT INTO content
 SET TYPE = '섬', content_name = '잔혹한 장난감 섬', location = '베른 북쪽',
 TIME = '210000', monday = FALSE, tuesday = FALSE, wednesday = TRUE,
@@ -152,3 +135,15 @@ thursday = TRUE, friday = TRUE, saturday = TRUE, sunday = FALSE;
 
 SELECT * FROM article;
 SELECT * FROM `member`;
+SELECT articlecomment.articleid, articlecomment.comment FROM articlecomment
+WHERE articleid = 1;
+
+SELECT articlecomment.comment, articlecomment.articleId, article.id FROM articlecomment
+INNER JOIN article
+ON articlecomment.articleId = article.id
+WHERE article.id = 1
+
+SELECT * FROM article;
+SELECT * FROM `member`;
+SELECT * FROM articlecomment;
+SELECT articlecomment.articleid, articlecomment.comment FROM articlecomment;
