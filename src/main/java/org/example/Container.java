@@ -44,6 +44,7 @@ public class Container {
         mainArticleController = new MainArticleController();
         questionController = new QuestionController();
         scheduleController = new ScheduleController();
+        profileController = new ProfileController();
 
         scanner = new Scanner(System.in);
         session = new Session();

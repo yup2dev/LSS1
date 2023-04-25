@@ -28,8 +28,11 @@ public class MoveController {
                 System.out.println("-".repeat(30));
                 System.out.println("https://lostark.game.onstove.com/Main");
             } else if (cmd.equals("내정보")) {
+                if(Container.session.isLogined() == false) {
+                    System.out.println("로그인 상태가 아닙니다.");
+                    break;
+                }
                 System.out.println("내 정보 페이지로 이동합니다.");
-                System.out.println("-".repeat(30));
                 Container.profileController.run();
             } else if (cmd.equals("돌아가기")) {
                 System.out.println("메인홈페이지로 이동합니다");

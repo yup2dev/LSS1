@@ -10,13 +10,10 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
-import java.util.Scanner;
+
 
 public class ScheduleController {
     public void run() {
-
-        Scanner sc = Container.scanner;
-
         while (true) {
             System.out.println("\n마이 스케줄러 / 요일별 일정 / 종류별 일정 / 돌아가기\n");
             System.out.println("-".repeat(30));
@@ -28,6 +25,32 @@ public class ScheduleController {
 
             if (rq.getUrlPath().equals("돌아가기")) {
                 break;
+            }
+
+            try {
+                // 연결시작
+                Class.forName("com.mysql.jdbc.Driver");
+
+                String url = "jdbc:mysql://127.0.0.1:3306/LSS?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull";
+
+                conn = DriverManager.getConnection(url, "root", "");
+                // 연결끝
+
+                // 명령 실행
+                doAction(conn, rq);
+
+            } catch (ClassNotFoundException e) {
+                System.out.println("드라이버 로딩 실패");
+            } catch (SQLException e) {
+                System.out.println("에러: " + e);
+            } finally {
+                try {
+                    if (conn != null && !conn.isClosed()) {
+                        conn.close();
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

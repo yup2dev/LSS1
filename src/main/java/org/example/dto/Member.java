@@ -25,4 +25,13 @@ public class Member {
         this.nickname = (String) memberMap.get("nickname");
         this.birth = (String) memberMap.get("birth");
     }
+
+    public Member(int id, String loginId, String loginPw, String name, String nickname, String birth) {
+        this.id = id;
+        this.loginId = loginId;
+        this.loginPw = loginPw;
+        this.name = name;
+        this.nickname = nickname;
+        this.birth = birth;
+    }
 }
