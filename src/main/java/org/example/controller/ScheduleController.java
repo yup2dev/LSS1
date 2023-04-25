@@ -29,32 +29,6 @@ public class ScheduleController {
             if (rq.getUrlPath().equals("돌아가기")) {
                 break;
             }
-
-            try {
-                // 연결시작
-                Class.forName("com.mysql.jdbc.Driver");
-
-                String url = "jdbc:mysql://127.0.0.1:3306/LSS?useUnicode=true&characterEncoding=utf8&autoReconnect=true&serverTimezone=Asia/Seoul&useOldAliasMetadataBehavior=true&zeroDateTimeNehavior=convertToNull";
-
-                conn = DriverManager.getConnection(url, "root", "");
-                // 연결끝
-
-                // 명령 실행
-                int actionResult = doAction(conn, rq);
-
-            } catch (ClassNotFoundException e) {
-                System.out.println("드라이버 로딩 실패");
-            } catch (SQLException e) {
-                System.out.println("에러: " + e);
-            } finally {
-                try {
-                    if (conn != null && !conn.isClosed()) {
-                        conn.close();
-                    }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
         }
     }
 
