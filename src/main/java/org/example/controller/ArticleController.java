@@ -138,6 +138,10 @@ public class ArticleController {
             String cmd = Container.scanner.nextLine().trim();
 
             if (cmd.equals("댓글등록")) {
+                if (Container.session.isLogined() == false) {
+                    System.out.println("로그인 후 이용해주세요.");
+                    return;
+                }
                 System.out.println("-".repeat(30));
                 addcomment(id);
                 System.out.println("-".repeat(30));
