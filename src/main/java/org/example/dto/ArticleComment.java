@@ -13,9 +13,10 @@ public class ArticleComment {
     public int articleId;
     public String comment;
     public String extra__writerName;
-    public ArticleComment(int id, int articleId, String comment){
+    public ArticleComment(int id, int memberId, int articleId, String comment){
         this.id = id;
         this.comment = comment;
+        this.memberId = memberId;
         this.articleId = articleId;
     }
 

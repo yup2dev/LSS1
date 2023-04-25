@@ -10,6 +10,19 @@ import java.util.List;
 import java.util.Map;
 
 public class ArticleRepository {
+
+    public List<Map<String,Object>> findComment(){
+        SecSql sql = new SecSql();
+        sql.append("SELECT articlecomment.articleid, articlecomment.comment from articlecomment");
+
+        return DBUtil.selectRows(Container.conn, sql);
+    }
+    public void showComment() {
+        for(Map<String, Object> commentMap : findComment()){
+            System.out.println(commentMap.get("articlecomment"));
+        }
+    }
+
     public int write(int memberId, String title, String body, int hit) {
         SecSql sql = new SecSql();
 
@@ -73,5 +86,20 @@ public class ArticleRepository {
         }
         System.out.println(articles);
         return articles;
+    }
+
+    public int addcomment(int memberId, int articleId, String comment) {
+        SecSql sql = new SecSql();
+
+        sql.append("INSERT INTO articlecomment");
+        sql.append(" SET regDate = NOW()");
+        sql.append(", updateDate = NOW()");
+        sql.append(", memberId = ?", memberId);
+        sql.append(", articleId = ?", articleId);
+        sql.append(", `comment` = ?", comment);
+
+        int id = DBUtil.insert(Container.conn, sql);
+        System.out.println(id);
+        return id;
     }
 }

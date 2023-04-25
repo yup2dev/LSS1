@@ -4,6 +4,7 @@ import org.example.Container;
 import org.example.dto.Article;
 import org.example.dto.ArticleComment;
 
+import javax.xml.stream.events.Comment;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -131,6 +132,7 @@ public class ArticleController {
         System.out.printf("제목 : %s\n", article.title);
         System.out.printf("내용 : %s\n", article.body);
         System.out.println("-".repeat(30));
+        articleService.showArticleComment();
 
         for (int i = 0; i < commentList.size(); i++) {
             ArticleComment articleComment = commentList.get(i);
@@ -146,10 +148,8 @@ public class ArticleController {
 
             if (cmd.equals("댓글등록")) {
                 System.out.println("-".repeat(30));
-                System.out.println("댓글 내용을 입력해주세요 : ");
-                String comment = Container.scanner.nextLine();
+                addcomment(id);
                 System.out.println("-".repeat(30));
-                commentList.add(new ArticleComment(commentId, id, comment));
                 commentId++;
                 for (int i = 0; i < commentList.size(); i++) {
                     ArticleComment articleComment = commentList.get(i);
@@ -164,5 +164,20 @@ public class ArticleController {
                 break;
             }
         }
+    }
+    public void addcomment(int articleID) {
+        if (Container.session.isLogined() == false) {
+            System.out.println("로그인 후 이용해주세요.");
+            return;
+        }
+
+        System.out.println("댓글 내용을 입력해주세요 : ");
+        String comment = Container.scanner.nextLine();
+
+        int memberId = Container.session.loginedMemberId;
+        int id = articleService.addcomment(articleID, memberId, comment);
+        System.out.printf("%d번 게시물이 등록되었습니다.\n", id);
+        ArrayList<ArticleComment> articleCommentList = new ArrayList<>();
+        articleCommentList.add(new ArticleComment(id, memberId, articleID, comment));
     }
 }
