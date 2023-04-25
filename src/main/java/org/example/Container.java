@@ -24,11 +24,12 @@ public class Container {
     public static ScheduleController scheduleController;
     public static QuestionController questionController;
     public static MainArticleController mainArticleController;
-
+    public static ProfileController profileController;
     public static Scanner scanner;
     public static Session session;
     public static Connection conn;
     public static Rq rq;
+
 
     public static void init() {
         articleRepository = new ArticleRepository();
