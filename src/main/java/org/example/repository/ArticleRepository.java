@@ -11,15 +11,16 @@ import java.util.Map;
 
 public class ArticleRepository {
 
-    public List<Map<String,Object>> findComment(){
+    public List<Map<String,Object>> findComment(int articleid){
         SecSql sql = new SecSql();
         sql.append("SELECT articlecomment.articleid, articlecomment.comment from articlecomment");
-
+        sql.append("WHERE articleid = ?", articleid);
         return DBUtil.selectRows(Container.conn, sql);
     }
-    public void showComment() {
-        for(Map<String, Object> commentMap : findComment()){
-            System.out.println(commentMap.get("articlecomment"));
+
+    public void showComment(int articleid) {
+        for(Map<String, Object> commentMap : findComment(articleid)){
+            System.out.println("댓글 : " + commentMap.get("comment"));
         }
     }
 
@@ -66,26 +67,6 @@ public class ArticleRepository {
         sql.append("WHERE id = ?", id);
 
         DBUtil.update(Container.conn, sql);
-    }
-
-    public List<Article> allArticle(){
-        SecSql sql = new SecSql();
-
-        sql.append("SELECT A.id, A.title");
-        sql.append(", M.nickname AS extra__writerName");
-        sql.append("FROM article AS A");
-        sql.append("INNER JOIN member AS M");
-        sql.append("ON A.memberId = M.id");
-
-        List<Article> articles = new ArrayList<>();
-
-        List<Map<String, Object>> articleListMap = DBUtil.selectRows(Container.conn, sql);
-
-        for (Map<String, Object> articleMap : articleListMap) {
-            articles.add(new Article(articleMap));
-        }
-        System.out.println(articles);
-        return articles;
     }
 
     public int addcomment(int memberId, int articleId, String comment) {

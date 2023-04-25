@@ -12,8 +12,6 @@ import static org.example.Container.*;
 
 public class ArticleController {
     int hit = 0;
-    public ArrayList<ArticleComment> commentList = new ArrayList<>();
-    static int commentId = 1;
 
     public void run() {
         while (true) {
@@ -132,14 +130,7 @@ public class ArticleController {
         System.out.printf("제목 : %s\n", article.title);
         System.out.printf("내용 : %s\n", article.body);
         System.out.println("-".repeat(30));
-        articleService.showArticleComment();
-
-        for (int i = 0; i < commentList.size(); i++) {
-            ArticleComment articleComment = commentList.get(i);
-            if (articleComment.getArticleId() == article.id) {
-                System.out.println("댓글 : " + articleComment.getComment());
-            }
-        }
+        articleService.showArticleComment(id);
 
         while (true) {
             System.out.println("-".repeat(30));
@@ -150,14 +141,7 @@ public class ArticleController {
                 System.out.println("-".repeat(30));
                 addcomment(id);
                 System.out.println("-".repeat(30));
-                commentId++;
-                for (int i = 0; i < commentList.size(); i++) {
-                    ArticleComment articleComment = commentList.get(i);
-                    if (articleComment.getArticleId() == article.id) {
-                        System.out.println("댓글 번호 : " + articleComment.getId());
-                        System.out.println("댓글 : " + articleComment.getComment());
-                    }
-                }
+                articleService.showArticleComment(id);
             } else if (cmd.equals("뒤로가기")) {
                 System.out.println("-".repeat(30));
                 System.out.println("게시물 목록으로 돌아갑니다.");
@@ -175,8 +159,8 @@ public class ArticleController {
         String comment = Container.scanner.nextLine();
 
         int memberId = Container.session.loginedMemberId;
-        int id = articleService.addcomment(articleID, memberId, comment);
-        System.out.printf("%d번 게시물이 등록되었습니다.\n", id);
+        int id = articleService.addcomment(memberId, articleID, comment);
+        System.out.printf("댓글이 등록되었습니다.\n");
         ArrayList<ArticleComment> articleCommentList = new ArrayList<>();
         articleCommentList.add(new ArticleComment(id, memberId, articleID, comment));
     }

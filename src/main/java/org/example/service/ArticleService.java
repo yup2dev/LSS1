@@ -7,8 +7,8 @@ import static org.example.Container.articleRepository;
 
 public class ArticleService {
 
-    public void showArticleComment(){
-        articleRepository.showComment();
+    public void showArticleComment(int articleid){
+        articleRepository.showComment(articleid);
     }
     public int write(int memberId, String title, String body, int hit) {
         return articleRepository.write(memberId, title, body, hit);
