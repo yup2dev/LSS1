@@ -40,7 +40,7 @@ public class ScheduleController {
                 // 연결끝
 
                 // 명령 실행
-                int actionResult = doAction(conn, sc, rq, cmd);
+                int actionResult = doAction(conn, rq);
 
             } catch (ClassNotFoundException e) {
                 System.out.println("드라이버 로딩 실패");
@@ -58,7 +58,7 @@ public class ScheduleController {
         }
     }
 
-    private int doAction(Connection conn, Scanner sc, Rq rq, String cmd) {
+    private int doAction(Connection conn, Rq rq) {
         if (rq.getUrlPath().equals("마이 스케줄러")) {
             while (true) {
                 System.out.println("\n========== 마이 스케줄러 ==========");
@@ -124,9 +124,13 @@ public class ScheduleController {
                 System.out.print("명령) ");
                 String scheduleCmd = Container.scanner.nextLine();
 
+                if (scheduleCmd.equals("추가하기") || scheduleCmd.equals("삭제하기")) {
+                    contentList(conn);
+                }
+
                 while (true) {
                     if (scheduleCmd.equals("추가하기")) {
-                        contentList(conn);
+
                         System.out.println("번호 입력(-1 : 돌아가기)) ");
                         int addcontentId = -1;
 
@@ -141,7 +145,7 @@ public class ScheduleController {
 
 
                     } else if (scheduleCmd.equals("삭제하기")) {
-                        contentList(conn);
+
                         System.out.println("번호 입력(-1 : 돌아가기)) ");
                         int deletecontentId = -1;
 
@@ -155,7 +159,7 @@ public class ScheduleController {
                         updateFalse(deletecontentId);
 
                     } else if (scheduleCmd.equals("돌아가기")) {
-                        break;
+                        return 0;
 
                     } else {
                         System.out.println("메뉴를 다시 선택해주세요.");
