@@ -18,11 +18,6 @@ public class ProfileController {
         System.out.println("\n========= 내 정보 =========");
         Connection conn = null;
 
-            /* if (rq.getUrlPath().equals("돌아가기")) {
-                break;
-            }
-
-             */
 
         try {
             // 연결시작
