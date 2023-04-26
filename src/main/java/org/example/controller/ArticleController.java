@@ -11,8 +11,6 @@ import static org.example.Container.*;
 
 public class ArticleController {
     int hit = 0;
-    public ArrayList<ArticleComment> commentList = new ArrayList<>();
-    static int commentId = 1;
 
     public void run() {
         while (true) {
@@ -131,13 +129,7 @@ public class ArticleController {
         System.out.printf("제목 : %s\n", article.title);
         System.out.printf("내용 : %s\n", article.body);
         System.out.println("-".repeat(30));
-
-        for (int i = 0; i < commentList.size(); i++) {
-            ArticleComment articleComment = commentList.get(i);
-            if (articleComment.getArticleId() == article.id) {
-                System.out.println("댓글 : " + articleComment.getComment());
-            }
-        }
+        articleService.showArticleComment(id);
 
         while (true) {
             System.out.println("-".repeat(30));
@@ -145,24 +137,34 @@ public class ArticleController {
             String cmd = Container.scanner.nextLine().trim();
 
             if (cmd.equals("댓글등록")) {
-                System.out.println("-".repeat(30));
-                System.out.println("댓글 내용을 입력해주세요 : ");
-                String comment = Container.scanner.nextLine();
-                System.out.println("-".repeat(30));
-                commentList.add(new ArticleComment(commentId, id, comment));
-                commentId++;
-                for (int i = 0; i < commentList.size(); i++) {
-                    ArticleComment articleComment = commentList.get(i);
-                    if (articleComment.getArticleId() == article.id) {
-                        System.out.println("댓글 번호 : " + articleComment.getId());
-                        System.out.println("댓글 : " + articleComment.getComment());
-                    }
+                if (Container.session.isLogined() == false) {
+                    System.out.println("로그인 후 이용해주세요.");
+                    return;
                 }
+                System.out.println("-".repeat(30));
+                addcomment(id);
+                System.out.println("-".repeat(30));
+                articleService.showArticleComment(id);
             } else if (cmd.equals("뒤로가기")) {
                 System.out.println("-".repeat(30));
                 System.out.println("게시물 목록으로 돌아갑니다.");
                 break;
             }
         }
+    }
+    public void addcomment(int articleID) {
+        if (Container.session.isLogined() == false) {
+            System.out.println("로그인 후 이용해주세요.");
+            return;
+        }
+
+        System.out.println("댓글 내용을 입력해주세요 : ");
+        String comment = Container.scanner.nextLine();
+
+        int memberId = Container.session.loginedMemberId;
+        int id = articleService.addcomment(memberId, articleID, comment);
+        System.out.printf("댓글이 등록되었습니다.\n");
+        ArrayList<ArticleComment> articleCommentList = new ArrayList<>();
+        articleCommentList.add(new ArticleComment(id, memberId, articleID, comment));
     }
 }

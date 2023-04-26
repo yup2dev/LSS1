@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="진짜 마지막" />
+        <module name="발표LSS" />
         <module name="JDBC_Board" />
       </profile>
     </annotationProcessing>

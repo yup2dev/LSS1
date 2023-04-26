@@ -1,24 +1,24 @@
 package org.example.repository;
 
 import org.example.Container;
-import org.example.dto.Article;
+import org.example.dto.Question;
 import org.example.util.DBUtil;
 import org.example.util.SecSql;
 
 import java.util.List;
 import java.util.Map;
 
-public class ArticleRepository {
+public class QuestionRepository {
 
-    public List<Map<String,Object>> findComment(int articleid){
+    public List<Map<String,Object>> findComment(int questionid){
         SecSql sql = new SecSql();
-        sql.append("SELECT articlecomment.articleid, articlecomment.comment from articlecomment");
-        sql.append("WHERE articleid = ?", articleid);
+        sql.append("SELECT questioncomment.questionid, questioncomment.comment from questioncomment");
+        sql.append("WHERE questionid = ?", questionid);
         return DBUtil.selectRows(Container.conn, sql);
     }
 
-    public void showComment(int articleid) {
-        for(Map<String, Object> commentMap : findComment(articleid)){
+    public void showComment(int questionid) {
+        for(Map<String, Object> commentMap : findComment(questionid)){
             System.out.println("댓글 : " + commentMap.get("comment"));
         }
     }
@@ -26,7 +26,7 @@ public class ArticleRepository {
     public int write(int memberId, String title, String body, int hit) {
         SecSql sql = new SecSql();
 
-        sql.append("INSERT INTO article");
+        sql.append("INSERT INTO question");
         sql.append(" SET regDate = NOW()");
         sql.append(", updateDate = NOW()");
         sql.append(", memberId = ?", memberId);
@@ -39,43 +39,39 @@ public class ArticleRepository {
         return id;
     }
 
-    public Article getArticleById(int id) {
+    public Question getQuestionById(int id) {
         SecSql sql = new SecSql();
-
-        sql.append("SELECT A.*");
+        sql.append("SELECT Q.*");
         sql.append(", M.nickname AS extra__writerName");
-        sql.append("FROM article AS A");
+        sql.append("FROM question AS Q");
         sql.append("INNER JOIN member AS M");
         sql.append("ON A.memberId = M.id");
-        sql.append("WHERE A.id = ?", id);
-
-        Map<String, Object> articleMap = DBUtil.selectRow(Container.conn, sql);
-
-        if (articleMap.isEmpty()) {
+        sql.append("WHERE Q.id = ?", id);
+        Map<String, Object> questionMap = DBUtil.selectRow(Container.conn, sql);
+        if (questionMap.isEmpty()) {
             return null;
         }
-
-        return new Article(articleMap);
+        return new Question(questionMap);
     }
 
     public void increaseHit(int id) {
         SecSql sql = new SecSql();
 
-        sql.append("UPDATE article");
+        sql.append("UPDATE question");
         sql.append("SET hit = hit + 1");
         sql.append("WHERE id = ?", id);
 
         DBUtil.update(Container.conn, sql);
     }
 
-    public int addcomment(int memberId, int articleId, String comment) {
+    public int addcomment(int memberId, int questionId, String comment) {
         SecSql sql = new SecSql();
 
-        sql.append("INSERT INTO articlecomment");
+        sql.append("INSERT INTO questioncomment");
         sql.append(" SET regDate = NOW()");
         sql.append(", updateDate = NOW()");
         sql.append(", memberId = ?", memberId);
-        sql.append(", articleId = ?", articleId);
+        sql.append(", questionId = ?", questionId);
         sql.append(", `comment` = ?", comment);
 
         int id = DBUtil.insert(Container.conn, sql);
