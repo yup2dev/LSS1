@@ -13,7 +13,7 @@ public class QuestionRepository {
     public List<Map<String,Object>> findComment(int questionid){
         SecSql sql = new SecSql();
         sql.append("SELECT questioncomment.questionid, questioncomment.comment from questioncomment");
-        sql.append("WHERE questionid = ?", questionid);
+        sql.append("WHERE questionid = " + questionid);
         return DBUtil.selectRows(Container.conn, sql);
     }
 
@@ -23,16 +23,15 @@ public class QuestionRepository {
         }
     }
 
-    public int write(int memberId, String title, String body, int hit) {
+    public int write(int memberId, String title, String body) {
         SecSql sql = new SecSql();
 
         sql.append("INSERT INTO question");
         sql.append(" SET regDate = NOW()");
         sql.append(", updateDate = NOW()");
-        sql.append(", memberId = ?", memberId);
-        sql.append(", title = ?", title);
-        sql.append(", `body` = ?", body);
-        sql.append(", `hit` = ?", hit);
+        sql.append(", memberId = " + memberId);
+        sql.append(", title = " + title);
+        sql.append(", `body` = " + body);
 
         int id = DBUtil.insert(Container.conn, sql);
         System.out.println(id);
