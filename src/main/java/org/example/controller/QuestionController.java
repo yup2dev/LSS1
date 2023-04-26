@@ -7,23 +7,21 @@ import org.example.dto.QuestionComment;
 import java.sql.*;
 import java.util.ArrayList;
 
-import static org.example.Container.*;
-
 public class QuestionController {
-    int hit = 0;
+    int hit2 = 0;
 
     public void run() {
         while (true) {
             System.out.println("-".repeat(30));
-            System.out.println("Q&A 보기 / 글쓰기 /상세보기 / 돌아가기");
+            System.out.println("Q&A 보기 / 글쓰기 / 상세보기 / 돌아가기");
             System.out.printf("게시판 명령어: ");
             String command = Container.scanner.nextLine();
             if (command.equals("Q&A 보기")) {
-                questionController.showList();
+                Container.questionController.showList();
             } else if (command.equals("글쓰기")) {
-                questionController.write();
+                Container.questionController.qwrite();
             } else if (command.equals("상세보기")) {
-                questionController.showDetail();
+                Container.questionController.showDetail();
             } else if (command.equals("돌아가기")) {
                 break;
             }
@@ -59,6 +57,7 @@ public class QuestionController {
         } catch (ClassNotFoundException e) {
             System.out.println("드라이버 로딩 실패");
         } catch (SQLException e) {
+
         } finally {
             try {
                 if (conn != null && !conn.isClosed()) {
@@ -79,11 +78,11 @@ public class QuestionController {
         }
         System.out.printf("총 등록된 게시글 수는 %d 입니다\n", questionList.size());
         System.out.println("-".repeat(30));
-        scanner.nextLine();
+        Container.scanner.nextLine();
     }
 
 
-    public void write() {
+    public void qwrite() {
         if (Container.session.isLogined() == false) {
             System.out.println("로그인 후 이용해주세요.");
             return;
@@ -91,28 +90,28 @@ public class QuestionController {
 
         System.out.println("== 게시물 등록 ==");
         System.out.printf("제목 : ");
-        String title = Container.scanner.nextLine();
+        String qtitle = Container.scanner.nextLine();
         System.out.printf("내용 : ");
-        String body = Container.scanner.nextLine();
+        String qbody = Container.scanner.nextLine();
 
         int memberId = Container.session.loginedMemberId;
-        int id = questionService.write(memberId, title, body, hit);
-        System.out.printf("%d번 게시물이 등록되었습니다.\n", id);
+        int qid = Container.questionService.qwrite(memberId, qtitle, qbody);
+        System.out.printf("%d번 게시물이 등록되었습니다.\n", qid);
         ArrayList<Question> questionList = new ArrayList<>();
-        questionList.add(new Question(id, title));
+        questionList.add(new Question(qid, qtitle));
     }
 
     public void showDetail() {
         System.out.println("-".repeat(30));
         System.out.println("게시글 번호를 입력하세요");
         int id = Container.scanner.nextInt();
+        Container.scanner.nextLine();
         if (id == 0) {
             System.out.println("id를 올바르게 입력해주세요.");
             return;
         }
 
-        questionService.increaseHit(id);
-        Question question = questionService.getQuestionById(id);
+        Question question = Container.questionService.getQuestionById(id);
 
         if (question == null) {
             System.out.printf("%d번 게시글은 존재하지 않습니다.\n", id);
@@ -123,11 +122,10 @@ public class QuestionController {
         System.out.printf("등록날짜 : %s\n", question.regDate);
         System.out.printf("수정날짜 : %s\n", question.updateDate);
         System.out.printf("작성자 : %s\n", question.extra__writerName);
-        System.out.printf("조회수 : %d\n", question.hit);
         System.out.printf("제목 : %s\n", question.title);
         System.out.printf("내용 : %s\n", question.body);
         System.out.println("-".repeat(30));
-        questionService.showQuestionComment(id);
+        Container.questionService.showQuestionComment(id);
 
         while (true) {
             System.out.println("-".repeat(30));
@@ -142,7 +140,7 @@ public class QuestionController {
                 System.out.println("-".repeat(30));
                 addcomment(id);
                 System.out.println("-".repeat(30));
-                questionService.showQuestionComment(id);
+                Container.questionService.showQuestionComment(id);
             } else if (cmd.equals("뒤로가기")) {
                 System.out.println("-".repeat(30));
                 System.out.println("게시물 목록으로 돌아갑니다.");
@@ -160,7 +158,7 @@ public class QuestionController {
         String comment = Container.scanner.nextLine();
 
         int memberId = Container.session.loginedMemberId;
-        int id = questionService.addcomment(memberId, questionID, comment);
+        int id = Container.questionService.addcomment(memberId, questionID, comment);
         System.out.printf("댓글이 등록되었습니다.\n");
         ArrayList<QuestionComment> questionCommentList = new ArrayList<>();
         questionCommentList.add(new QuestionComment(id, memberId, questionID, comment));

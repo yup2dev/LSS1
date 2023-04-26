@@ -1,28 +1,23 @@
 package org.example.service;
 
-import org.example.dto.Article;
+import org.example.Container;
 import org.example.dto.Question;
 
-import static org.example.Container.*;
 
 public class QuestionService {
     public void showQuestionComment(int questionid) {
-        questionRepository.showComment(questionid);
+        Container.questionRepository.showComment(questionid);
     }
 
-    public int write(int memberId, String title, String body, int hit) {
-        return questionRepository.write(memberId, title, body, hit);
+    public int qwrite(int memberId, String title, String body) {
+        return Container.questionRepository.qwrite(memberId, title, body);
     }
 
     public int addcomment(int memberID, int questionId, String comment) {
-        return questionRepository.addcomment(memberID, questionId, comment);
-    }
-
-    public void increaseHit(int id) {
-        questionRepository.increaseHit(id);
+        return Container.questionRepository.addcomment(memberID, questionId, comment);
     }
 
     public Question getQuestionById(int id) {
-        return questionRepository.getQuestionById(id);
+        return Container.questionRepository.getQuestionById(id);
     }
 }

@@ -37,9 +37,10 @@ public class Container {
     public static void init() {
         articleRepository = new ArticleRepository();
         memberRepository = new MemberRepository();
-
+        questionRepository = new QuestionRepository();
         articleService = new ArticleService();
         memberService = new MemberService();
+        questionService = new QuestionService();
 
         articleController = new ArticleController();
         memberController = new MemberController();
@@ -47,6 +48,7 @@ public class Container {
         mainArticleController = new MainArticleController();
         questionController = new QuestionController();
         scheduleController = new ScheduleController();
+
 
         scanner = new Scanner(System.in);
         session = new Session();

@@ -35,7 +35,6 @@ public class ArticleRepository {
         sql.append(", `hit` = ?", hit);
 
         int id = DBUtil.insert(Container.conn, sql);
-        System.out.println(id);
         return id;
     }
 

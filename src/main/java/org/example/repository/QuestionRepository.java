@@ -23,7 +23,7 @@ public class QuestionRepository {
         }
     }
 
-    public int write(int memberId, String title, String body, int hit) {
+    public int qwrite(int memberId, String title, String body) {
         SecSql sql = new SecSql();
 
         sql.append("INSERT INTO question");
@@ -32,11 +32,9 @@ public class QuestionRepository {
         sql.append(", memberId = ?", memberId);
         sql.append(", title = ?", title);
         sql.append(", `body` = ?", body);
-        sql.append(", `hit` = ?", hit);
 
-        int id = DBUtil.insert(Container.conn, sql);
-        System.out.println(id);
-        return id;
+        int qid = DBUtil.insert(Container.conn, sql);
+        return qid;
     }
 
     public Question getQuestionById(int id) {
@@ -45,23 +43,13 @@ public class QuestionRepository {
         sql.append(", M.nickname AS extra__writerName");
         sql.append("FROM question AS Q");
         sql.append("INNER JOIN member AS M");
-        sql.append("ON A.memberId = M.id");
+        sql.append("ON Q.memberId = M.id");
         sql.append("WHERE Q.id = ?", id);
         Map<String, Object> questionMap = DBUtil.selectRow(Container.conn, sql);
         if (questionMap.isEmpty()) {
             return null;
         }
         return new Question(questionMap);
-    }
-
-    public void increaseHit(int id) {
-        SecSql sql = new SecSql();
-
-        sql.append("UPDATE question");
-        sql.append("SET hit = hit + 1");
-        sql.append("WHERE id = ?", id);
-
-        DBUtil.update(Container.conn, sql);
     }
 
     public int addcomment(int memberId, int questionId, String comment) {
