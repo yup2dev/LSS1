@@ -6,34 +6,25 @@ USE LSS;
 
 # 게시물 테이블 생성
 CREATE TABLE article (
-id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-regDate DATETIME NOT NULL,
-updateDate DATETIME NOT NULL,
-title CHAR(100) NOT NULL,
-memberId INT NOT NULL,
-`body` TEXT NOT NULL,
-hit INT(10) UNSIGNED NOT NULL
-);
-
-CREATE TABLE articlecomment(
-id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-articleId INT UNSIGNED NOT NULL,
-regDate DATETIME NOT NULL,
-updateDate DATETIME NOT NULL,
-`comment` TEXT NOT NULL,
-memberId INT NOT NULL
+	id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	title CHAR(100) NOT NULL,
+	memberId INT NOT NULL,
+	`body` TEXT NOT NULL,
+	hit INT(10) UNSIGNED NOT NULL
 );
 
 # 회원 테이블 생성
 CREATE TABLE `member` (
-id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
-regDate DATETIME NOT NULL,
-updateDate DATETIME NOT NULL,
-loginId CHAR(20) NOT NULL,
-loginPw CHAR(100) NOT NULL,
-`name` CHAR(200) NOT NULL,
-nickname CHAR(20) NOT NULL,
-birth CHAR(20) NOT NULL
+	id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+	regDate DATETIME NOT NULL,
+	updateDate DATETIME NOT NULL,
+	loginId CHAR(20) NOT NULL,
+	loginPw CHAR(100) NOT NULL,
+	`name` CHAR(200) NOT NULL,
+	nickname CHAR(20) NOT NULL,
+	birth CHAR(20) NOT NULL
 );
 
 
@@ -48,6 +39,33 @@ TIME TIME NOT NULL,
 `sunday` BOOLEAN NOT NULL, `select` BOOLEAN NOT NULL
 );
 
+CREATE TABLE articlecomment(
+id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+articleId INT UNSIGNED NOT NULL,
+regDate DATETIME NOT NULL,
+updateDate DATETIME NOT NULL,
+`comment` TEXT NOT NULL,
+memberId INT NOT NULL
+);
+
+CREATE TABLE question(
+id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+regDate DATETIME NOT NULL,
+updateDate DATETIME NOT NULL,
+title CHAR(100) NOT NULL,
+memberId INT NOT NULL,
+`body` TEXT NOT NULL,
+);
+
+
+CREATE TABLE questioncomment(
+id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+questionId INT UNSIGNED NOT NULL,
+regDate DATETIME NOT NULL,
+updateDate DATETIME NOT NULL,
+`comment` TEXT NOT NULL,
+memberId INT NOT NULL
+);
 
 INSERT INTO content
 SET TYPE = '섬', content_name = '잔혹한 장난감 섬', location = '베른 북쪽',
@@ -133,17 +151,6 @@ SET TYPE = '유령선', content_name = '유령선1', location = '필드',
 TIME = '210000', monday = FALSE, tuesday = TRUE, wednesday = TRUE,
 thursday = TRUE, friday = TRUE, saturday = TRUE, sunday = FALSE;
 
-SELECT * FROM article;
-SELECT * FROM `member`;
-SELECT articlecomment.articleid, articlecomment.comment FROM articlecomment
-WHERE articleid = 1;
 
-SELECT articlecomment.comment, articlecomment.articleId, article.id FROM articlecomment
-INNER JOIN article
-ON articlecomment.articleId = article.id
-WHERE article.id = 1
 
-SELECT * FROM article;
-SELECT * FROM `member`;
-SELECT * FROM articlecomment;
-SELECT articlecomment.articleid, articlecomment.comment FROM articlecomment;
+

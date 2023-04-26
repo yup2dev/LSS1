@@ -7,11 +7,8 @@ import org.example.dto.QuestionComment;
 import java.sql.*;
 import java.util.ArrayList;
 
-
-
-
 public class QuestionController {
-    int hit = 0;
+    int hit2 = 0;
 
     public void run() {
         while (true) {
@@ -22,7 +19,9 @@ public class QuestionController {
             if (command.equals("Q&A 보기")) {
                 Container.questionController.showList();
             } else if (command.equals("글쓰기")) {
-                Container.questionController.write();
+
+                Container.questionController.qwrite();
+
             } else if (command.equals("상세보기")) {
                 Container.questionController.showDetail();
             } else if (command.equals("돌아가기")) {
@@ -60,6 +59,7 @@ public class QuestionController {
         } catch (ClassNotFoundException e) {
             System.out.println("드라이버 로딩 실패");
         } catch (SQLException e) {
+
         } finally {
             try {
                 if (conn != null && !conn.isClosed()) {
@@ -84,7 +84,7 @@ public class QuestionController {
     }
 
 
-    public void write() {
+    public void qwrite() {
         if (Container.session.isLogined() == false) {
             System.out.println("로그인 후 이용해주세요.");
             return;
@@ -92,15 +92,17 @@ public class QuestionController {
 
         System.out.println("== 게시물 등록 ==");
         System.out.printf("제목 : ");
-        String title = Container.scanner.nextLine();
+        String qtitle = Container.scanner.nextLine();
         System.out.printf("내용 : ");
-        String body = Container.scanner.nextLine();
+        String qbody = Container.scanner.nextLine();
 
         int memberId = Container.session.loginedMemberId;
-        int id = Container.questionService.write(memberId, title, body);
-        System.out.printf("%d번 게시물이 등록되었습니다.\n", id);
+
+        int qid = Container.questionService.qwrite(memberId, qtitle, qbody);
+        System.out.printf("%d번 게시물이 등록되었습니다.\n", qid);
+
         ArrayList<Question> questionList = new ArrayList<>();
-        questionList.add(new Question(id, title));
+        questionList.add(new Question(qid, qtitle));
     }
 
     public void showDetail() {
@@ -113,7 +115,6 @@ public class QuestionController {
             return;
         }
 
-        Container.questionService.increaseHit(id);
         Question question = Container.questionService.getQuestionById(id);
 
         if (question == null) {
@@ -125,7 +126,6 @@ public class QuestionController {
         System.out.printf("등록날짜 : %s\n", question.regDate);
         System.out.printf("수정날짜 : %s\n", question.updateDate);
         System.out.printf("작성자 : %s\n", question.extra__writerName);
-        System.out.printf("조회수 : %d\n", question.hit);
         System.out.printf("제목 : %s\n", question.title);
         System.out.printf("내용 : %s\n", question.body);
         System.out.println("-".repeat(30));

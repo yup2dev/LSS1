@@ -27,7 +27,6 @@ public class Question {
         this.memberId = (int) questionMap.get("memberId");
         this.title = (String) questionMap.get("title");
         this.body = (String) questionMap.get("body");
-        this.hit = (int) questionMap.get("hit");
 
         if(questionMap.get("extra__writerName") != null) {
             this.extra__writerName = (String)questionMap.get("extra__writerName");
