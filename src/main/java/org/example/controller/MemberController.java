@@ -28,6 +28,9 @@ public class MemberController {
             if (loginId.length() == 0) {
                 System.out.println("로그인 아이디를 입력해주세요.");
                 continue;
+            } else if (loginId.replaceAll("[0-9]", "").replaceAll("[a-z]", "").replaceAll("[A-Z]", "").length() != 0) {
+                System.out.println("영문과 숫자로만 입력하세요");
+                continue;
             }
             boolean isLoginIdDup = memberService.isLoginIdDup(loginId);
             if (isLoginIdDup) {
@@ -43,6 +46,9 @@ public class MemberController {
             loginPw = Container.scanner.nextLine().trim();
             if (loginPw.length() == 0) {
                 System.out.println("로그인 비밀번호를 입력해주세요.");
+                continue;
+            } else if (loginPw.length()<6) {
+                System.out.println("6자 이상 입력하세요");
                 continue;
             }
 
@@ -151,7 +157,7 @@ public class MemberController {
                 continue;
             }
 
-            System.out.printf("\"%s\"님 환영합니다.\n", member.getName());
+            System.out.printf("\"%s\"님 환영합니다.\n", member.getNickname());
             Container.session.login(member);
 
             System.out.println("-".repeat(30));

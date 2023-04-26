@@ -4,9 +4,20 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Scanner;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class App {
     public void run() {
+        Timer timer = new Timer();
+        TimerTask timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println("발표 빨리 끝내주세요");
+            }
+        };
+
+        timer.schedule(timerTask, 5000);
         System.out.println(" == Lss 시스템을 시작합니다 == ");
         Container.scanner = new Scanner(System.in);
         Container.init();
