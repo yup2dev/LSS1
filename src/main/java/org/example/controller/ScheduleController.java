@@ -136,6 +136,7 @@ public class ScheduleController {
 
                         try {
                             addcontentId = Container.scanner.nextInt();
+                            Container.scanner.nextLine();
                         } catch (InputMismatchException e) {
                             System.out.println("숫자만 입력하세요.");
                         }
@@ -151,6 +152,7 @@ public class ScheduleController {
 
                         try {
                             deletecontentId = Container.scanner.nextInt();
+                            Container.scanner.nextLine();
                         } catch (InputMismatchException e) {
                             System.out.println("숫자만 입력하세요.");
                         }
