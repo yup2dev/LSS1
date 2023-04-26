@@ -15,7 +15,7 @@ public class QuestionController {
     public void run() {
         while (true) {
             System.out.println("-".repeat(30));
-            System.out.println("Q&A 보기 / 글쓰기 /상세보기 / 돌아가기");
+            System.out.println("Q&A 보기 / 글쓰기 / 상세보기 / 돌아가기");
             System.out.printf("게시판 명령어: ");
             String command = Container.scanner.nextLine();
             if (command.equals("Q&A 보기")) {
@@ -106,6 +106,7 @@ public class QuestionController {
         System.out.println("-".repeat(30));
         System.out.println("게시글 번호를 입력하세요");
         int id = Container.scanner.nextInt();
+        Container.scanner.nextLine();
         if (id == 0) {
             System.out.println("id를 올바르게 입력해주세요.");
             return;
