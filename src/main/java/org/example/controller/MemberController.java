@@ -5,11 +5,7 @@ import org.example.dto.Member;
 import org.example.service.MemberService;
 
 public class MemberController {
-    private MemberService memberService;
 
-    public MemberController() {
-        memberService = Container.memberService;
-    }
 
     public void join() {
         String loginId;
@@ -29,7 +25,7 @@ public class MemberController {
                 System.out.println("로그인 아이디를 입력해주세요.");
                 continue;
             }
-            boolean isLoginIdDup = memberService.isLoginIdDup(loginId);
+            boolean isLoginIdDup = Container.memberService.isLoginIdDup(loginId);
             if (isLoginIdDup) {
                 System.out.printf("%s(은)는 이미 사용중인 로그인 아이디입니다.\n", loginId);
                 continue;
@@ -100,7 +96,7 @@ public class MemberController {
             }
             break;
         }
-        int id = memberService.join(loginId, loginPw, name, nickname, birth);
+        int id = Container.memberService.join(loginId, loginPw, name, nickname, birth);
         System.out.printf("%d번 회원이 등록되었습니다.\n", id);
         System.out.println("-".repeat(30));
     }
@@ -120,7 +116,7 @@ public class MemberController {
             return;
         }
 
-        Member member = memberService.getMemberByLoginId(loginId);
+        Member member = Container.memberService.getMemberByLoginId(loginId);
 
         if (member == null ) {
             System.out.println("입력하신 로그인 아이디는 존재하지 않습니다.");

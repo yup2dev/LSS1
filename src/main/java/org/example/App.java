@@ -55,7 +55,7 @@ public class App {
         Container.scanner.close();
     }
 
-    private void action(String cmd) {
+    public void action(String cmd) {
         if (cmd.equals("회원가입")) {
             Container.memberController.join();
         } else if (cmd.equals("로그인")) {
