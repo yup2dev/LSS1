@@ -165,7 +165,12 @@ public class MemberController {
             System.out.println("로그인 상태가 아닙니다.");
         }
         else {
-            System.out.println(Container.session.loginedMember.getLoginId());
+            System.out.println("아이디 : " + Container.session.loginedMember.getLoginId());
+            System.out.println("이름 : " + Container.session.loginedMember.getName());
+            System.out.println("닉네임 : " + Container.session.loginedMember.getNickname());
+            System.out.println("생년월일 : " + Container.session.loginedMember.getBirth());
+            System.out.println("가입일 : " + Container.session.loginedMember.getRegDate());
+            System.out.println("-".repeat(30));
         }
     }
 

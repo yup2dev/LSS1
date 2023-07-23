@@ -27,7 +27,6 @@ public class Container {
     public static MoveController moveController;
     public static ScheduleController scheduleController;
     public static QuestionController questionController;
-    public static MainArticleController mainArticleController;
     public static ProfileController profileController;
     public static Scanner scanner;
     public static Session session;
@@ -46,7 +45,6 @@ public class Container {
         articleController = new ArticleController();
         memberController = new MemberController();
         moveController = new MoveController();
-        mainArticleController = new MainArticleController();
         questionController = new QuestionController();
         scheduleController = new ScheduleController();
         profileController = new ProfileController();

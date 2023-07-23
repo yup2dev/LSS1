@@ -62,8 +62,6 @@ public class App {
             Container.memberController.login();
         } else if (cmd.equals("로그아웃")) {
             Container.memberController.logout();
-        } else if (cmd.equals("회원정보")) {
-            Container.memberController.checkid();
         } else if (cmd.equals("이동")) {
             Container.moveController.move();
         } else if (cmd.equals("종료")) {
